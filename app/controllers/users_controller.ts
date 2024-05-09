@@ -34,4 +34,10 @@ export default class UsersController {
       return response.badRequest({ message: 'Invalid credentials' })
     }
   }
+
+  async getUserProperties({ auth, response }: HttpContext) {
+    const user = auth.getUserOrFail()
+    await user.load('properties')
+    return response.status(200).send(user.properties)
+  }
 }

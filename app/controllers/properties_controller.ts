@@ -18,7 +18,12 @@ export default class PropertiesController {
       'land_surface',
     ])
     const property = await Property.create(data)
-    await property.related('user').associate(user)
+    await user.related('properties').save(property)
     return response.status(201).send({ property, message: 'Property created successfully' })
+  }
+
+  async index({ response }: HttpContext) {
+    const properties = await Property.query().preload('user')
+    return response.status(200).send(properties)
   }
 }

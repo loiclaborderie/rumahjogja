@@ -21,4 +21,5 @@ router.get('/', async () => {
 router.post('/register', [UsersController, 'register'])
 router.post('/login', [UsersController, 'login'])
 router.post('/property/create', [PropertiesController, 'create']).use(middleware.auth())
+router.get('/property/getAll', [PropertiesController, 'index'])
 router.get('/user/properties', [UsersController, 'getUserProperties']).use(middleware.auth())

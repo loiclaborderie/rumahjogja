@@ -24,7 +24,7 @@ export default class PropertyService {
     const sort =
       this.sortOptions.find((option) => option.id === filters.sortBy) || this.sortOptions[0]
     return Property.query()
-      .where('is_sold', false)
+      .whereNull('sold_at')
       .if(filters.search, (query) => query.whereILike('name', `%${filters.search}%`))
       .if(filters.minPrice, (query) => query.where('price', '>=', filters.minPrice))
       .if(filters.maxPrice, (query) => query.where('price', '<=', filters.maxPrice))

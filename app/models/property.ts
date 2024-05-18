@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
 import User from './user.js'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
+import Tag from './tag.js'
 
 export default class Property extends BaseModel {
   @column({ isPrimary: true })
@@ -46,6 +47,9 @@ export default class Property extends BaseModel {
   // declare owner: BelongsTo<typeof User>
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
+
+  @manyToMany(() => Tag)
+  declare tags: ManyToMany<typeof Tag>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

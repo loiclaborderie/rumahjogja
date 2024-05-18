@@ -29,10 +29,7 @@ export default class Property extends BaseModel {
   declare floorNumber: number
 
   @column()
-  declare isSold?: boolean
-
-  @column()
-  declare metrics?: string
+  declare soldAt?: DateTime | null
 
   @column()
   declare buildingSurface: number

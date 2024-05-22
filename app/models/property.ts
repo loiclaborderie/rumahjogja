@@ -29,8 +29,8 @@ export default class Property extends BaseModel {
   @column()
   declare floorNumber: number
 
-  @column()
-  declare soldAt?: DateTime | null
+  @column.dateTime()
+  declare soldAt?: DateTime
 
   @column()
   declare buildingSurface: number

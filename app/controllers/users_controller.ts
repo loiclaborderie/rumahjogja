@@ -1,15 +1,16 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
+import { createUserValidator } from '#validators/user'
 
 export default class UsersController {
   async register({ request, response }: HttpContext) {
-    const data = request.only(['full_name', 'email', 'password', 'is_seller'])
+    let userData = await request.validateUsing(createUserValidator)
 
-    const existingUser = await User.findBy('email', data.email)
+    const existingUser = await User.findBy('email', userData.email)
     if (existingUser) {
       return response.badRequest({ message: 'Email already in use' })
     }
-    const user = await User.create(data)
+    const user = await User.create(userData)
     const apiToken = await User.accessTokens.create(user)
 
     return response.status(200).send({ token: apiToken.value!.release() })
